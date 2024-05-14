@@ -1,0 +1,123 @@
+<div class="">
+  <div class="sm:w-17rem md:w-20rem xl:w-22rem  h-20rem">
+    <img
+      class="w-full h-full"
+      [src]="prodect.img"
+      alt=""
+      style="object-fit: cover"
+    />
+  </div>
+  <div class="p-2" style="word-wrap: break-word">
+    <h4 class="font-normal text-2xl">{{ prodect.title }}</h4>
+    <p class="" [ngClass]="prodect.catgure === 'man' ?  'text-blue-400':'text-pink-500' " >{{ prodect.body }}</p>
+    <p>{{ prodect.price }}</p>
+    <div class=" flex flex-column md:flex-row justify-content-center mt-5">
+      <button
+      (click)="handelOpenDailogDelete()"
+        class="border-round outline-none border-none my-2 md:my-0  bg-black-alpha-90 text-white flex justify-content-center align-items-center py-2 px-3 mr-2 w-full"
+      >
+        <i class="pi pi-trash mr-2" style="font-size: 1.5rem"></i>
+        <span class="text-xl">Remove</span>
+      </button>
+
+      <button
+      (click)="handelOpenDailogUpdate()"
+        class="border-round outline-none border-none mb-4 md:mb-0  bg-black-alpha-90 text-white flex justify-content-center align-items-center py-2 px-3 w-full"
+      >
+        <i class="pi pi-pencil mr-2" style="font-size: 1.5rem"></i>
+        <span class="text-xl">update</span>
+      </button>
+    </div>
+  </div>
+</div>
+
+
+
+<!-- start Dailog -->
+@if (isDailogDelete == true) {
+  <div class="dialog-overlay  fixed top-0 left-0 w-full h-full flex justify-content-center align-items-center" >
+    <div class="bg-white p-5 border-round shadow-5 w-27rem">
+      <p class=" font-medium text-2xl">Are you sure you want to delete the product?</p>
+      <div class="mt-4">
+        <button class="border-round outline-none border-none bg-red-600  b text-white text-xl py-2 px-3 mr-3" (click)="handelRemoveProdect()" >Delete</button>
+        <button class="border-round outline-none border-none  bg-black-alpha-90 text-white text-xl py-2 px-3"  (click)="handelCloseDailogDelete()" >Cancel</button>
+      </div>
+    </div>
+  </div>
+}
+@else {
+  <div></div>
+}
+
+<!-- end Dailog -->
+
+<!-- start Dialiog -->
+@if (isDialogOpenUpdate == true) {
+  <form >
+    <div
+      class="dialog-overlay fixed top-0 left-0 w-full h-full flex justify-content-center align-items-center"
+    >
+      <div class="bg-white p-5 border-round shadow-5 w-27rem">
+        <h1>updata Prodect</h1>
+        <div class="my-2">
+          <input
+          [value]="data.text1"
+            required
+            class="w-full border-1 boredr-black p-2 outline-none"
+            type="text"
+            placeholder="title"
+            (change)="onTextFieldChange($event)"
+            
+          />
+        </div>
+        <div class="my-2">
+          <input
+          [value]="data.text3"
+            required="true"
+            class="w-full border-1 boredr-black p-2 outline-none"
+            type="text"
+            placeholder="price"
+            (change)="onTextFieldChange3($event)"
+          />
+        </div>
+        <h2 class="text-center">Upload Image</h2>
+        <div>
+          <div class="container">
+            <div class="upload-section">
+              <input
+                required
+                type="file"
+                id="myFile"
+                name="filename"
+                (change)="onFileSelected($event)"
+                #fileInput required
+                
+              />
+            </div>
+            @if(data.imageUrl){
+            <div class="flex text-center image-preview h-7rem w-7rem justify-content-center align-items-center ">
+              <img class="w-full h-full" [src]="data.imageUrl" alt="Uploaded Image" />
+            </div>
+            }
+          </div>
+        </div>
+        <div>
+          <select class="p-2 w-full my-2" (change)="onSelectChange($event)">
+            <option value="Men's Shoes"> man</option>
+            <option value="Women's Shoes">woman</option>
+          </select>
+        </div>
+        <div class="flex justify-content-center mt-4">
+          <button class=" outline-none border-none text-white py-2 px-3 border-round ml-2 bg-blue-500 "   (click)="handelUpdateProdect($event)" [disabled]="checkEmpty(data.text1,data.text3,data.imageUrl)">Update</button>
+          <button class="bg-black-alpha-90 outline-none border-none text-white py-2 px-3 border-round ml-2 " (click)="handelCloseDailogUpdate()">Close</button>
+        </div>
+      </div>
+    </div>
+  
+  </form>
+  
+  }@else {
+  <div></div>
+  }
+<!-- end Dailog -->
+
