@@ -1,0 +1,42 @@
+.grids {
+    display: grid;
+    grid-gap: 5px;
+    justify-items: center;
+}
+
+/* إعداد توزيع الأعمدة الافتراضي (شاشات صغيرة) */
+/* .grids {
+    grid-template-columns: repeat(1, 1fr);
+} */
+
+/* إعداد توزيع الأعمدة للشاشات المتوسطة */
+@media (min-width: 768px) {
+    .grids {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* إعداد توزيع الأعمدة للشاشات الكبيرة */
+@media (min-width: 1024px) {
+    .grids {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+
+
+.dialog-overlay {
+    background-color: hsla(0, 0%, 0%, 0.502);
+  }
+  
+
+
+  
+  .upload-section {
+    margin-bottom: 20px;
+  }
+
+  
+
+
+
