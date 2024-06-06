@@ -1,0 +1,91 @@
+@if (isDialogOpen == true) {
+
+<div
+  class="dialog-overlay fixed top-0 left-0 w-full h-full flex justify-content-center align-items-center"
+>
+  <form [formGroup]="dataForm">
+    <div class="bg-white p-5 border-round shadow-5 w-27rem">
+      <h1>
+        @if (nameAction === "UpdataProdect") { Update Prodect } @else { Creat Prodect }
+      </h1>
+      <div class="my-2">
+        <input
+          class=""
+          [ngClass]="dataForm.controls['text1'].invalid && dataForm.controls['text1'].touched ? 'w-full p-2 outline-none border-2 border-red-600 border-round' : 'w-full p-2 outline-none border-2 border-gray-400 border-round'"
+          type="text"
+          placeholder="title"
+          name="text1"
+          formControlName="text1"
+        />
+        @if (dataForm.controls['text1'].invalid && (dataForm.controls['text1'].touched || dataForm.controls['text1'].dirty ) ) {
+          @if (dataForm.controls['text1'].errors?.["required"]) {
+            <span class="text-red-600 ml-1">This Is required</span>
+          }
+          @if (dataForm.controls['text1'].errors?.["minlength"]) {
+            <span class="text-red-600 ml-1">Min 10 Char  required</span>
+          }
+        }
+      </div>
+      <div class="my-2">
+        <input
+          required
+          [ngClass]="dataForm.controls['text3'].invalid && dataForm.controls['text3'].touched ? 'w-full p-2 outline-none border-2 border-red-600 border-round' : 'w-full p-2 outline-none border-2 border-gray-400 border-round'"
+          type="text"
+          placeholder="price"
+          formControlName="text3"
+        />
+        @if (dataForm.controls['text3'].invalid && (dataForm.controls['text3'].touched || dataForm.controls['text3'].dirty ) ) {
+          @if (dataForm.controls['text3'].errors?.["required"]) {
+            <span class="text-red-600 ml-1">This Is required</span>
+          }
+        }
+      </div>
+      <h2 class="text-center">Upload Image</h2>
+      <div>
+        <label for="file">Upload Image</label>
+        <input id="file" type="file" (change)="onFileChange($event)">
+        @if (dataForm.controls['file'].invalid && (dataForm.controls['file'].touched || dataForm.controls['file'].dirty ) ) {
+          @if (dataForm.controls['file'].errors?.["required"]) {
+            <span class="text-red-600 ml-1">This is required</span>
+          }
+        }
+      </div>
+    
+      @if (imageSrc) {
+        <img [src]="imageSrc" alt="Image preview" style="max-width: 200px; margin-top: 10px;">
+      }
+      <div>
+        <select class="p-2 w-full my-2" name="select3" formControlName="selectedItem" [ngClass]="dataForm.controls['selectedItem'].invalid && dataForm.controls['selectedItem'].touched ? 'w-full p-2 outline-none border-2 border-red-600 border-round' : 'w-full p-2 outline-none border-2 border-gray-400 border-round'">
+          <option value="man">man</option>
+          <option value="woman">woman</option>
+        </select>
+      </div>
+      @if (dataForm.controls['selectedItem'].invalid && (dataForm.controls['selectedItem'].touched || dataForm.controls['selectedItem'].dirty ) ) {
+        @if (dataForm.controls['selectedItem'].errors?.["required"]) {
+          <span class="text-red-600 ml-1">This is required</span>
+        }
+      }
+      <div class="flex justify-content-center mt-4">
+        <button
+          type="submit"
+          class="    "
+          [className]="dataForm.invalid ? 'bg-gray-500 text-white py-2 px-3 border-round ml-2 outline-none border-none'  : 'bg-blue-500 text-white py-2 px-3 border-round ml-2 outline-none border-none' "
+          (click)="CreatProdect()"
+          [disabled]="dataForm.invalid"
+        >
+          @if (nameAction === "UpdataProdect") { Update Prodect } @else { Creat
+          Prodect }
+        </button>
+        <button
+          class="bg-black-alpha-90 outline-none border-none text-white py-2 px-3 border-round ml-2"
+          (click)="closeDialog()"
+        >
+          Close
+        </button>
+      </div>
+    </div>
+  </form>
+</div>
+}@else {
+<div></div>
+}

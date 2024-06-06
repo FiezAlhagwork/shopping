@@ -1,32 +1,31 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { HeaderComponent } from './header/header.component';
 import { prodect } from './app.component.models';
 import { CartComponent } from './cart/cart.component';
 import { Data } from './app.component.models';
 import uuid4 from 'uuid4';
-import { NgClass } from '@angular/common';
+import { JsonPipe, NgClass } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { ModelsComponent } from './models/models.component';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, HeaderComponent, CartComponent, NgClass],
+  imports: [
+    RouterOutlet,
+    HeaderComponent,
+    CartComponent,
+    ModelsComponent,
+    NgClass,
+  ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
 })
-export class AppComponent {
-  imageUrl: string = '';
-
-  onFileSelected(event: any): void {
-    const file = event.target.files[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.readAsDataURL(file);
-      reader.onload = () => {
-        this.imageUrl = reader.result as string;
-      };
-    }
-  }
+export class AppComponent implements OnInit {
+  filterDataWoman: any[] = [];
+  filterDataMan: any[] = [];
+  filterDataAll: any[] = [];
 
   items: Array<prodect> = [
     {
@@ -126,77 +125,58 @@ export class AppComponent {
       catgure: 'man',
     },
   ];
+  isDialogOpen!: boolean;
+
+  ngOnInit(): void {
+    this.filterDataAll = this.items;
+    this.populateArrays();
+     this.isDialogOpen= false;
+  }
 
   //  Start filter Data
-  filterDataWoman = this.items.filter((i) => i.catgure === "woman" )
-  filterDataMan = this.items.filter((i) =>  i.catgure === "man")
-  filterDataAll = this.items
-  
 
   handelFilterDataAll() {
-    this.items = this.filterDataAll
-    
+    this.items = this.filterDataAll;
   }
   handelFilterDataWoman() {
-    this.items = this.filterDataWoman
+    this.items = this.filterDataWoman;
   }
   handelFilterDataMan() {
-    this.items = this.filterDataMan
+    this.items = this.filterDataMan;
   }
   // End filter Data
+  
 
-  isDialogOpen: boolean = false;
-  data: Data = {
-    text1: '',
-    text3: '',
-    selectedItem: 'man',
-  };
+
+
+  uploadFile(obj:Data): void {
+
+    this.filterDataAll.push({
+      id: uuid4(),
+      img:obj.imageUrl,
+      title:obj.text1,
+      body:obj.selectedItem,
+      price:obj.text3,
+      catgure:obj.selectedItem,
+    });
+    this.populateArrays();
+    console.log(obj);
+    this.isDialogOpen = false
+    obj
+  }
 
   openDialog(): void {
     this.isDialogOpen = true;
   }
-
-  closeDialog(): void {
-    this.isDialogOpen = false;
+  closeDialog():void{
+    this.isDialogOpen = false
   }
 
-  onTextFieldChange(event: any) {
-    this.data.text1 = event.target.value;
-  }
-  onTextFieldChange3(event: any) {
-    this.data.text3 = event.target.value;
-  }
-
-  onSelectChange(event: any) {
-    this.data.selectedItem = event.target.value;
-    console.log('this is select', this.data.selectedItem);
-  }
-
-  uploadFile(): void {
-    // هنا يمكنك إرسال الملف إلى الخادم
-    const data = this.data;
-    this.items.push({
-      id: uuid4(),
-      img: this.imageUrl,
-      title: this.data.text1,
-      body: this.data.selectedItem,
-      price: this.data.text3,
-      catgure: this.data.selectedItem,
-    });
-    this.isDialogOpen = false;
-    this.data.text1 = '';
-    this.data.text3 = '';
-    this.imageUrl = '';
-    console.log(this.items);
-  }
-
-  checkEmpty(...str: string[]) {
-    for (let i = 0; i < str.length; i++) {
-      if (typeof str[i] === 'string' && str[i].trim() === '') {
-        return true;
-      }
-    }
-    return false;
+  populateArrays() {
+    this.filterDataWoman = this.filterDataAll.filter(
+      (i) => i.catgure === 'woman'
+    );
+    this.filterDataMan = this.filterDataAll.filter((i) => i.catgure === 'man');
   }
 
   onCartClicked(event: prodect) {
@@ -206,10 +186,7 @@ export class AppComponent {
   updateprodect(event: prodect) {
     const index = this.items.findIndex((item) => item.id === event.id);
     if (index !== -1) {
-      // قم بتحديث البيانات هنا بناءً على احتياجاتك
       this.items[index] = event;
-    }
+    } 
   }
-
-
 }

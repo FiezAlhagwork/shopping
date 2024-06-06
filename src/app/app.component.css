@@ -31,10 +31,17 @@
   
 
 
-  
-  .upload-section {
-    margin-bottom: 20px;
+
+  .required{
+    border: 3px solid  rgba(124, 5, 5, 0.875);
+    outline: none;
   }
+  .no__required{
+    border: 3px solid gray;
+  }
+
+
+
 
   
 

@@ -23,6 +23,7 @@
 <div
   class="flex justify-content-center align-items-center my-4 transition-all transition-duration-100"
 >
+
   <button
     class="border-none outline-none py-3 px-4 ml-3 border-round shadow-1 text-md font-bold bg-gray-200 hover:bg-black-alpha-90 hover:text-white cursor-pointer"
     (click)="handelFilterDataAll()"
@@ -60,73 +61,10 @@
 
 
 
-<!-- start Dialiog -->
-@if (isDialogOpen == true) {
-<form >
-  <div
-    class="dialog-overlay fixed top-0 left-0 w-full h-full flex justify-content-center align-items-center"
-  >
-    <div class="bg-white p-5 border-round shadow-5 w-27rem">
-      <h1>Creat Prodect</h1>
-      <div class="my-2">
-        <input
-        [value]="data.text1"
-          required
-          class="w-full border-1 boredr-black p-2 outline-none"
-          type="text"
-          placeholder="title"
-          (change)="onTextFieldChange($event)"
-          
-        />
-      </div>
-      <div class="my-2">
-        <input
-        [value]="data.text3"
-          required="true"
-          class="w-full border-1 boredr-black p-2 outline-none"
-          type="text"
-          placeholder="price"
-          (change)="onTextFieldChange3($event)"
-        />
-      </div>
-      <h2 class="text-center">Upload Image</h2>
-      <div>
-        <div class="container">
-          <div class="upload-section">
-            <input
-              required
-              type="file"
-              id="myFile"
-              name="filename"
-              (change)="onFileSelected($event)"
-              #fileInput required
-              
-            />
-          </div>
-          @if(imageUrl){
-          <div class="flex text-center image-preview h-7rem w-7rem justify-content-center align-items-center ">
-            <img class="w-full h-full" [src]="imageUrl" alt="Uploaded Image" />
-          </div>
-          }
-        </div>
-      </div>
-      <div>
-        <select class="p-2 w-full my-2" (change)="onSelectChange($event)">
-          <option value="Men's Shoes"> man</option>
-          <option value="Women's Shoes">woman</option>
-        </select>
-      </div>
-      <div class="flex justify-content-center mt-4">
-        <button class=" outline-none border-none text-white py-2 px-3 border-round ml-2 bg-blue-500 "   (click)="uploadFile()" [disabled]="checkEmpty(data.text1,data.text3,imageUrl)">Upload</button>
-        <button class="bg-black-alpha-90 outline-none border-none text-white py-2 px-3 border-round ml-2 " (click)="closeDialog()">Close</button>
-      </div>
-    </div>
-  </div>
 
-</form>
-}@else {
-<div></div>
-}
+
+<!-- start Dialiog -->
+<app-models [isDialogOpen]="isDialogOpen" [isDialogclose]="closeDialog" [nameAction]="'CraetProdect'" (sheringDatatoApp)="uploadFile($event)" />
 
 <!-- End Dialiog -->
 

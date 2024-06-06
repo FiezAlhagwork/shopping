@@ -1,6 +1,6 @@
 export interface prodect { 
     id:number | string;
-    img:string;
+    img:string | ArrayBuffer | null;
     title:string;
     body:string;
     price:string;
@@ -9,7 +9,8 @@ export interface prodect {
 export interface Data {
     text1:string;
     text3:string;
-    selectedItem:string;
+    selectedItem: string;
+    imageUrl: string | ArrayBuffer | null;
 }
 
 export interface DataAndImageUrl extends Data{
