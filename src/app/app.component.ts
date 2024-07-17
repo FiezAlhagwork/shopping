@@ -5,8 +5,7 @@ import { prodect } from './app.component.models';
 import { CartComponent } from './cart/cart.component';
 import { Data } from './app.component.models';
 import uuid4 from 'uuid4';
-import { JsonPipe, NgClass } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import {  NgClass } from '@angular/common';
 import { ModelsComponent } from './models/models.component';
 
 @Component({
@@ -126,7 +125,6 @@ export class AppComponent implements OnInit {
     },
   ];
   isDialogOpen!: boolean;
-
   ngOnInit(): void {
     this.filterDataAll = this.items;
     this.populateArrays();
